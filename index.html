@@ -1822,21 +1822,23 @@
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     padding:2rem 1.5rem;
     overflow:hidden;
+    color:rgba(255,255,255,0.92);
   }
   #license-gate.hidden { display:none !important; }
   .lic-logo { font-size:3rem;margin-bottom:0.5rem; }
-  .lic-title { font-size:1.6rem;font-weight:700;color:var(--text-primary);margin-bottom:0.25rem; }
-  .lic-sub { font-size:0.88rem;color:var(--text-muted);margin-bottom:2rem;text-align:center; }
-  .lic-card { background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;width:100%;max-width:360px; }
-  .lic-label { font-size:0.78rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem; }
-  .lic-input { width:100%;padding:0.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius-md);font-size:0.95rem;font-family:inherit;background:var(--bg-primary);color:var(--text-primary);box-sizing:border-box;outline:none;transition:border-color 0.2s; }
-  .lic-input:focus { border-color:var(--green); }
-  .lic-input.error { border-color:var(--red); }
-  .lic-error { font-size:0.8rem;color:var(--red);margin-top:0.4rem;min-height:1.1rem; }
-  .lic-btn { width:100%;margin-top:1rem;padding:0.85rem;background:var(--green);color:#fff;border:none;border-radius:var(--radius-md);font-size:0.95rem;font-weight:600;cursor:pointer;transition:background 0.2s; }
-  .lic-btn:hover { background:var(--green-dark); }
-  .lic-buy { display:block;text-align:center;margin-top:1.25rem;font-size:0.82rem;color:var(--text-muted); }
-  .lic-buy a { color:var(--green);text-decoration:none;font-weight:600; }
+  .lic-title { font-size:1.6rem;font-weight:700;color:rgba(255,255,255,0.92);margin-bottom:0.25rem; }
+  .lic-sub { font-size:0.88rem;color:rgba(255,255,255,0.45);margin-bottom:2rem;text-align:center; }
+  .lic-card { background:#161b22;border:1px solid rgba(255,255,255,0.14);border-radius:var(--radius-lg);padding:1.5rem;width:100%;max-width:360px; }
+  .lic-label { font-size:0.78rem;font-weight:600;color:rgba(255,255,255,0.60);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem; }
+  .lic-input { width:100%;padding:0.75rem 1rem;border:1.5px solid rgba(255,255,255,0.18);border-radius:var(--radius-md);font-size:0.95rem;font-family:inherit;background:#0d1117;color:rgba(255,255,255,0.92);box-sizing:border-box;outline:none;transition:border-color 0.2s; }
+  .lic-input::placeholder { color:rgba(255,255,255,0.30); }
+  .lic-input:focus { border-color:#4CAF50; }
+  .lic-input.error { border-color:#f44336; }
+  .lic-error { font-size:0.8rem;color:#f44336;margin-top:0.4rem;min-height:1.1rem; }
+  .lic-btn { width:100%;margin-top:1rem;padding:0.85rem;background:#4CAF50;color:#fff;border:none;border-radius:var(--radius-md);font-size:0.95rem;font-weight:600;cursor:pointer;transition:background 0.2s; }
+  .lic-btn:hover { background:#388E3C; }
+  .lic-buy { display:block;text-align:center;margin-top:1.25rem;font-size:0.82rem;color:rgba(255,255,255,0.40); }
+  .lic-buy a { color:#4CAF50;text-decoration:none;font-weight:600; }
 
   /* ── Quiz Funnel ── */
   #quiz-gate {

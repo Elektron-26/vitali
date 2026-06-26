@@ -1857,6 +1857,7 @@
     color: rgba(255,255,255,0.92);
   }
   #quiz-gate.hidden { display:none !important; }
+  #lang-gate.hidden { display:none !important; }
   .quiz-progress-wrap { width:100%;max-width:420px;padding:1.5rem 1.5rem 0.5rem;flex-shrink:0; }
   .quiz-progress-track { height:4px;background:rgba(255,255,255,0.14);border-radius:2px;overflow:hidden; }
   .quiz-progress-fill { height:100%;background:#4CAF50;border-radius:2px;transition:width 0.4s ease; }
@@ -2681,351 +2682,371 @@
 </div>
 
 <!-- ─── LICENSE GATE ─── -->
+<!-- ─── LANG GATE ─── -->
+<div id="lang-gate" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:14000;background:#0d1117;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;text-align:center;">
+  <div style="font-size:3.5rem;margin-bottom:0.75rem;">🌿</div>
+  <div style="font-size:2.2rem;font-weight:800;color:rgba(255,255,255,0.92);margin-bottom:0.35rem;">Vitali</div>
+  <div style="font-size:0.95rem;color:rgba(255,255,255,0.50);margin-bottom:2.5rem;">Choose your language / Izberite jezik</div>
+  <div style="width:100%;max-width:300px;display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+    <div class="quiz-card" onclick="qSelectLang('en')" style="flex-direction:column;align-items:center;text-align:center;padding:2rem 1rem;gap:0.5rem;cursor:pointer;">
+      <span style="font-size:2.5rem;">🇬🇧</span>
+      <span class="quiz-card-title" style="margin-top:0.6rem;font-size:1rem;">English</span>
+    </div>
+    <div class="quiz-card" onclick="qSelectLang('sl')" style="flex-direction:column;align-items:center;text-align:center;padding:2rem 1rem;gap:0.5rem;cursor:pointer;">
+      <span style="font-size:2.5rem;">🇸🇮</span>
+      <span class="quiz-card-title" style="margin-top:0.6rem;font-size:1rem;">Slovenščina</span>
+    </div>
+  </div>
+</div>
+
 <!-- ─── QUIZ FUNNEL ─── -->
 <div id="quiz-gate" class="hidden">
-  <div class="quiz-progress-wrap">
+
+  <!-- PROGRESS BAR -->
+  <div class="quiz-progress-wrap" id="quiz-progress-wrap">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
       <span class="quiz-step-label" id="quiz-step-label">Korak 1 / 11</span>
       <span class="quiz-step-label" id="quiz-step-pct">9%</span>
     </div>
     <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-prog" style="width:9%"></div></div>
   </div>
+
   <div class="quiz-body">
 
-    <!-- ═══ KORAK 1: Ime & Spol ═══ -->
-    <div class="quiz-step active" id="qstep-1">
+    <!-- ═══ KORAK 1: Ime & Spol / Name & Gender ═══ -->
+    <div class="quiz-step" id="qstep-1">
       <div class="quiz-emoji">👋</div>
-      <div class="quiz-q">Dobrodošel v Vitali!</div>
-      <div class="quiz-hint">Ustvari tvoj osebni wellness profil — traja ~2 minuti.</div>
+      <div class="quiz-q"><span class="sl-only">Dobrodošel v Vitali!</span><span class="en-only">Welcome to Vitali!</span></div>
+      <div class="quiz-hint"><span class="sl-only">Ustvari tvoj osebni wellness profil — traja ~2 minuti.</span><span class="en-only">Create your personal wellness profile — takes ~2 minutes.</span></div>
       <div class="quiz-field">
-        <label>Tvoje ime</label>
+        <label><span class="sl-only">Tvoje ime</span><span class="en-only">Your name</span></label>
         <input class="quiz-input" id="q-name" type="text" placeholder="npr. Ana" autocomplete="given-name">
       </div>
       <div class="quiz-field">
-        <label>Spol</label>
+        <label><span class="sl-only">Spol</span><span class="en-only">Gender</span></label>
         <div class="quiz-cards" style="grid-template-columns:1fr 1fr;">
           <div class="quiz-card" onclick="qSelectCard(this,'gender','m')">
-            <span class="quiz-card-icon">👨</span><span class="quiz-card-title">Moški</span>
+            <span class="quiz-card-icon">👨</span><span class="quiz-card-title"><span class="sl-only">Moški</span><span class="en-only">Male</span></span>
           </div>
           <div class="quiz-card" onclick="qSelectCard(this,'gender','f')">
-            <span class="quiz-card-icon">👩</span><span class="quiz-card-title">Ženska</span>
+            <span class="quiz-card-icon">👩</span><span class="quiz-card-title"><span class="sl-only">Ženska</span><span class="en-only">Female</span></span>
           </div>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qNext(1)">Naprej →</button>
+      <button class="quiz-btn" onclick="qNext(1)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
     </div>
 
-    <!-- ═══ KORAK 2: Telesni podatki ═══ -->
+    <!-- ═══ KORAK 2: Telesni podatki / Body measurements ═══ -->
     <div class="quiz-step" id="qstep-2">
       <div class="quiz-emoji">📏</div>
-      <div class="quiz-q">Telesni podatki</div>
-      <div class="quiz-hint">Za natančen izračun kalorij in BMI.</div>
+      <div class="quiz-q"><span class="sl-only">Telesni podatki</span><span class="en-only">Body measurements</span></div>
+      <div class="quiz-hint"><span class="sl-only">Za natančen izračun kalorij in BMI.</span><span class="en-only">For an accurate calorie and BMI calculation.</span></div>
       <div class="quiz-field">
-        <label>Starost (leta)</label>
+        <label><span class="sl-only">Starost (leta)</span><span class="en-only">Age (years)</span></label>
         <input class="quiz-input" id="q-age" type="number" placeholder="npr. 28" min="16" max="99">
       </div>
       <div class="quiz-field">
-        <label>Višina (cm)</label>
+        <label><span class="sl-only">Višina (cm)</span><span class="en-only">Height (cm)</span></label>
         <input class="quiz-input" id="q-height" type="number" placeholder="npr. 175" min="130" max="230">
       </div>
       <div class="quiz-field">
-        <label>Trenutna teža (kg)</label>
+        <label><span class="sl-only">Trenutna teža (kg)</span><span class="en-only">Current weight (kg)</span></label>
         <input class="quiz-input" id="q-weight" type="number" placeholder="npr. 80" min="30" max="300">
       </div>
       <div class="quiz-field">
-        <label>Ciljna teža (kg) <span style="font-weight:400;text-transform:none;color:var(--text-muted)">— neobvezno</span></label>
+        <label><span class="sl-only">Ciljna teža (kg) <span style="font-weight:400;text-transform:none;">— neobvezno</span></span><span class="en-only">Goal weight (kg) <span style="font-weight:400;text-transform:none;">— optional</span></span></label>
         <input class="quiz-input" id="q-goal-weight" type="number" placeholder="npr. 72" min="30" max="300">
       </div>
-      <button class="quiz-btn" onclick="qNext(2)">Naprej →</button>
-      <button class="quiz-btn-back" onclick="qBack(2)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qNext(2)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(2)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ KORAK 3: Glavni cilj ═══ -->
+    <!-- ═══ KORAK 3: Glavni cilj / Main goal ═══ -->
     <div class="quiz-step" id="qstep-3">
       <div class="quiz-emoji">🎯</div>
-      <div class="quiz-q">Kaj je tvoj glavni cilj?</div>
-      <div class="quiz-hint">Prilagodimo tvoj kalorični in vadbeni plan.</div>
+      <div class="quiz-q"><span class="sl-only">Kaj je tvoj glavni cilj?</span><span class="en-only">What's your main goal?</span></div>
+      <div class="quiz-hint"><span class="sl-only">Prilagodimo tvoj kalorični in vadbeni plan.</span><span class="en-only">We'll personalize your calorie and workout plan.</span></div>
       <div class="quiz-cards">
         <div class="quiz-card" onclick="qSelectCard(this,'goal','lose')">
           <span class="quiz-card-icon">🔥</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Izguba teže</div><div class="quiz-card-desc">Zmanjšati telesno maščobo</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Izguba teže</span><span class="en-only">Weight loss</span></div><div class="quiz-card-desc"><span class="sl-only">Zmanjšati telesno maščobo</span><span class="en-only">Reduce body fat</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'goal','maintain')">
           <span class="quiz-card-icon">⚖️</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Vzdrževanje teže</div><div class="quiz-card-desc">Ohraniti trenutno telesno težo</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Vzdrževanje teže</span><span class="en-only">Maintain weight</span></div><div class="quiz-card-desc"><span class="sl-only">Ohraniti trenutno telesno težo</span><span class="en-only">Keep current body weight</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'goal','gain')">
           <span class="quiz-card-icon">💪</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Pridobivanje mišic</div><div class="quiz-card-desc">Povečati mišično maso in moč</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Pridobivanje mišic</span><span class="en-only">Build muscle</span></div><div class="quiz-card-desc"><span class="sl-only">Povečati mišično maso in moč</span><span class="en-only">Increase muscle mass and strength</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'goal','fitness')">
           <span class="quiz-card-icon">🏃</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Splošna kondicija</div><div class="quiz-card-desc">Boljša vzdržljivost in počutje</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Splošna kondicija</span><span class="en-only">General fitness</span></div><div class="quiz-card-desc"><span class="sl-only">Boljša vzdržljivost in počutje</span><span class="en-only">Better endurance and wellbeing</span></div></div>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qNext(3)">Naprej →</button>
-      <button class="quiz-btn-back" onclick="qBack(3)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qNext(3)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(3)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ KORAK 4: Aktivnost ═══ -->
+    <!-- ═══ KORAK 4: Aktivnost / Activity ═══ -->
     <div class="quiz-step" id="qstep-4">
       <div class="quiz-emoji">🏃</div>
-      <div class="quiz-q">Kako aktiven si trenutno?</div>
-      <div class="quiz-hint">Povprečno gibanje v tipičnem tednu.</div>
+      <div class="quiz-q"><span class="sl-only">Kako aktiven si trenutno?</span><span class="en-only">How active are you currently?</span></div>
+      <div class="quiz-hint"><span class="sl-only">Povprečno gibanje v tipičnem tednu.</span><span class="en-only">Average movement in a typical week.</span></div>
       <div class="quiz-cards">
         <div class="quiz-card" onclick="qSelectCard(this,'activity','1.2')">
           <span class="quiz-card-icon">🛋️</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Sedeč način</div><div class="quiz-card-desc">Pisarniško delo, zelo malo gibanja</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Sedeč način</span><span class="en-only">Sedentary</span></div><div class="quiz-card-desc"><span class="sl-only">Pisarniško delo, zelo malo gibanja</span><span class="en-only">Office work, very little movement</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'activity','1.375')">
           <span class="quiz-card-icon">🚶</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Rahlo aktiven</div><div class="quiz-card-desc">1–2 treningi tedensko, hoja</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Rahlo aktiven</span><span class="en-only">Lightly active</span></div><div class="quiz-card-desc"><span class="sl-only">1–2 treningi tedensko, hoja</span><span class="en-only">1–2 workouts per week, walking</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'activity','1.55')">
           <span class="quiz-card-icon">🏋️</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Zmerno aktiven</div><div class="quiz-card-desc">3–4 treningi tedensko</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Zmerno aktiven</span><span class="en-only">Moderately active</span></div><div class="quiz-card-desc"><span class="sl-only">3–4 treningi tedensko</span><span class="en-only">3–4 workouts per week</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'activity','1.725')">
           <span class="quiz-card-icon">🏆</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Zelo aktiven</div><div class="quiz-card-desc">5–6 treningov tedensko</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Zelo aktiven</span><span class="en-only">Very active</span></div><div class="quiz-card-desc"><span class="sl-only">5–6 treningov tedensko</span><span class="en-only">5–6 workouts per week</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'activity','1.9')">
           <span class="quiz-card-icon">⚡</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Profesionalni nivo</div><div class="quiz-card-desc">Dnevni intenzivni treningi</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Profesionalni nivo</span><span class="en-only">Professional level</span></div><div class="quiz-card-desc"><span class="sl-only">Dnevni intenzivni treningi</span><span class="en-only">Daily intense training</span></div></div>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qNext(4)">Naprej →</button>
-      <button class="quiz-btn-back" onclick="qBack(4)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qNext(4)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(4)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ KORAK 5: Izkušnje ═══ -->
+    <!-- ═══ KORAK 5: Izkušnje / Experience ═══ -->
     <div class="quiz-step" id="qstep-5">
       <div class="quiz-emoji">🎓</div>
-      <div class="quiz-q">Kakšne so tvoje izkušnje?</div>
-      <div class="quiz-hint">S treningom in zdravim življenjskim slogom.</div>
+      <div class="quiz-q"><span class="sl-only">Kakšne so tvoje izkušnje?</span><span class="en-only">What's your experience level?</span></div>
+      <div class="quiz-hint"><span class="sl-only">S treningom in zdravim življenjskim slogom.</span><span class="en-only">With training and a healthy lifestyle.</span></div>
       <div class="quiz-cards">
         <div class="quiz-card" onclick="qSelectCard(this,'experience','beginner')">
           <span class="quiz-card-icon">🌱</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Začetnik</div><div class="quiz-card-desc">Manj kot 6 mesecev rednega treninga</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Začetnik</span><span class="en-only">Beginner</span></div><div class="quiz-card-desc"><span class="sl-only">Manj kot 6 mesecev rednega treninga</span><span class="en-only">Less than 6 months of regular training</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'experience','intermediate')">
           <span class="quiz-card-icon">📈</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Vmesni nivo</div><div class="quiz-card-desc">1–3 leta rednega treninga</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Vmesni nivo</span><span class="en-only">Intermediate</span></div><div class="quiz-card-desc"><span class="sl-only">1–3 leta rednega treninga</span><span class="en-only">1–3 years of regular training</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'experience','advanced')">
           <span class="quiz-card-icon">🏅</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Napreden</div><div class="quiz-card-desc">3+ leta z jasnimi cilji</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Napreden</span><span class="en-only">Advanced</span></div><div class="quiz-card-desc"><span class="sl-only">3+ leta z jasnimi cilji</span><span class="en-only">3+ years with clear goals</span></div></div>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qNext(5)">Naprej →</button>
-      <button class="quiz-btn-back" onclick="qBack(5)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qNext(5)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(5)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ KORAK 6: Preference vadbe ═══ -->
+    <!-- ═══ KORAK 6: Preference vadbe / Workout preferences ═══ -->
     <div class="quiz-step" id="qstep-6">
       <div class="quiz-emoji">🏅</div>
-      <div class="quiz-q">Katere vrste vadbe ti ustrezajo?</div>
-      <div class="quiz-hint">Izberi vse kar te zanima (večkratna izbira).</div>
+      <div class="quiz-q"><span class="sl-only">Katere vrste vadbe ti ustrezajo?</span><span class="en-only">Which types of workouts suit you?</span></div>
+      <div class="quiz-hint"><span class="sl-only">Izberi vse kar te zanima (večkratna izbira).</span><span class="en-only">Select all that interest you (multiple choice).</span></div>
       <div class="quiz-checks" id="q-workout-prefs">
         <div class="quiz-check" onclick="qToggleMulti(this,'workoutPrefs','cardio')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🏃 Kardio (tek, kolesarjenje, plavanje)</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🏃 Kardio (tek, kolesarjenje, plavanje)</span><span class="en-only">🏃 Cardio (running, cycling, swimming)</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'workoutPrefs','weights')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🏋️ Dviganje uteži / moč</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🏋️ Dviganje uteži / moč</span><span class="en-only">🏋️ Weight lifting / strength</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'workoutPrefs','hiit')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">⚡ HIIT / intervalni trening</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">⚡ HIIT / intervalni trening</span><span class="en-only">⚡ HIIT / interval training</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'workoutPrefs','yoga')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🧘 Joga / pilates</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🧘 Joga / pilates</span><span class="en-only">🧘 Yoga / pilates</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'workoutPrefs','walking')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🚶 Hoja / planinarjenje</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🚶 Hoja / planinarjenje</span><span class="en-only">🚶 Walking / hiking</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'workoutPrefs','sport')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">⚽ Ekipni šport</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">⚽ Ekipni šport</span><span class="en-only">⚽ Team sports</span></span>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qNext(6)">Naprej →</button>
-      <button class="quiz-btn-back" onclick="qBack(6)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qNext(6)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(6)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ KORAK 7: Prehrana ═══ -->
+    <!-- ═══ KORAK 7: Prehrana / Diet ═══ -->
     <div class="quiz-step" id="qstep-7">
       <div class="quiz-emoji">🥗</div>
-      <div class="quiz-q">Prehranske navade in omejitve</div>
-      <div class="quiz-hint">Izberi vse kar velja zate.</div>
+      <div class="quiz-q"><span class="sl-only">Prehranske navade in omejitve</span><span class="en-only">Dietary habits and restrictions</span></div>
+      <div class="quiz-hint"><span class="sl-only">Izberi vse kar velja zate.</span><span class="en-only">Select all that apply to you.</span></div>
       <div class="quiz-checks" id="q-diet-prefs">
         <div class="quiz-check selected" onclick="qToggleMulti(this,'diet','none')">
-          <div class="quiz-check-box">✓</div><span class="quiz-check-label">🍽️ Brez posebnih omejitev</span>
+          <div class="quiz-check-box">✓</div><span class="quiz-check-label"><span class="sl-only">🍽️ Brez posebnih omejitev</span><span class="en-only">🍽️ No special restrictions</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'diet','vegetarian')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🥦 Vegetarijanec</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🥦 Vegetarijanec</span><span class="en-only">🥦 Vegetarian</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'diet','vegan')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🌱 Vegan</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🌱 Vegan</span><span class="en-only">🌱 Vegan</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'diet','gluten')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🌾 Brez glutena</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🌾 Brez glutena</span><span class="en-only">🌾 Gluten-free</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'diet','lactose')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🥛 Brez laktoze</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🥛 Brez laktoze</span><span class="en-only">🥛 Lactose-free</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleMulti(this,'diet','lowcarb')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🥩 Low carb / keto</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🥩 Low carb / keto</span><span class="en-only">🥩 Low carb / keto</span></span>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qNext(7)">Naprej →</button>
-      <button class="quiz-btn-back" onclick="qBack(7)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qNext(7)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(7)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ KORAK 8: Spanje ═══ -->
+    <!-- ═══ KORAK 8: Spanje / Sleep ═══ -->
     <div class="quiz-step" id="qstep-8">
       <div class="quiz-emoji">😴</div>
-      <div class="quiz-q">Koliko spiš povprečno na noč?</div>
-      <div class="quiz-hint">Spanje bistveno vpliva na regeneracijo in metabolizem.</div>
+      <div class="quiz-q"><span class="sl-only">Koliko spiš povprečno na noč?</span><span class="en-only">How much do you sleep on average per night?</span></div>
+      <div class="quiz-hint"><span class="sl-only">Spanje bistveno vpliva na regeneracijo in metabolizem.</span><span class="en-only">Sleep significantly affects recovery and metabolism.</span></div>
       <div class="quiz-cards">
         <div class="quiz-card" onclick="qSelectCard(this,'sleep','under6')">
           <span class="quiz-card-icon">😩</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Manj kot 6 ur</div><div class="quiz-card-desc">Pogosto premalo spanja</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Manj kot 6 ur</span><span class="en-only">Less than 6 hours</span></div><div class="quiz-card-desc"><span class="sl-only">Pogosto premalo spanja</span><span class="en-only">Often too little sleep</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'sleep','6to7')">
           <span class="quiz-card-icon">😐</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">6–7 ur</div><div class="quiz-card-desc">Pod priporočenim</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title">6–7 <span class="sl-only">ur</span><span class="en-only">hours</span></div><div class="quiz-card-desc"><span class="sl-only">Pod priporočenim</span><span class="en-only">Below recommended</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'sleep','7to8')">
           <span class="quiz-card-icon">😊</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">7–8 ur</div><div class="quiz-card-desc">Priporočena količina</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title">7–8 <span class="sl-only">ur</span><span class="en-only">hours</span></div><div class="quiz-card-desc"><span class="sl-only">Priporočena količina</span><span class="en-only">Recommended amount</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'sleep','over8')">
           <span class="quiz-card-icon">😴</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">8+ ur</div><div class="quiz-card-desc">Dovolj počitka</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title">8+ <span class="sl-only">ur</span><span class="en-only">hours</span></div><div class="quiz-card-desc"><span class="sl-only">Dovolj počitka</span><span class="en-only">Enough rest</span></div></div>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qNext(8)">Naprej →</button>
-      <button class="quiz-btn-back" onclick="qBack(8)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qNext(8)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(8)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ KORAK 9: Stres ═══ -->
+    <!-- ═══ KORAK 9: Stres / Stress ═══ -->
     <div class="quiz-step" id="qstep-9">
       <div class="quiz-emoji">🧘</div>
-      <div class="quiz-q">Kakšen je tvoj povprečni stres?</div>
-      <div class="quiz-hint">Stres vpliva na kortizol, apetit in regeneracijo.</div>
+      <div class="quiz-q"><span class="sl-only">Kakšen je tvoj povprečni stres?</span><span class="en-only">What's your average stress level?</span></div>
+      <div class="quiz-hint"><span class="sl-only">Stres vpliva na kortizol, apetit in regeneracijo.</span><span class="en-only">Stress affects cortisol, appetite and recovery.</span></div>
       <div class="quiz-cards">
         <div class="quiz-card" onclick="qSelectCard(this,'stress','low')">
           <span class="quiz-card-icon">🟢</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Nizek stres</div><div class="quiz-card-desc">Večinoma sproščen(a) in miren(a)</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Nizek stres</span><span class="en-only">Low stress</span></div><div class="quiz-card-desc"><span class="sl-only">Večinoma sproščen(a) in miren(a)</span><span class="en-only">Mostly relaxed and calm</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'stress','medium')">
           <span class="quiz-card-icon">🟡</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Zmeren stres</div><div class="quiz-card-desc">Občasno obremenjen(a)</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Zmeren stres</span><span class="en-only">Moderate stress</span></div><div class="quiz-card-desc"><span class="sl-only">Občasno obremenjen(a)</span><span class="en-only">Occasionally overwhelmed</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'stress','high')">
           <span class="quiz-card-icon">🟠</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Visok stres</div><div class="quiz-card-desc">Pogosto pod pritiskom</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Visok stres</span><span class="en-only">High stress</span></div><div class="quiz-card-desc"><span class="sl-only">Pogosto pod pritiskom</span><span class="en-only">Often under pressure</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'stress','very')">
           <span class="quiz-card-icon">🔴</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Zelo visok stres</div><div class="quiz-card-desc">Kronično obremenjen(a)</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Zelo visok stres</span><span class="en-only">Very high stress</span></div><div class="quiz-card-desc"><span class="sl-only">Kronično obremenjen(a)</span><span class="en-only">Chronically overwhelmed</span></div></div>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qNext(9)">Naprej →</button>
-      <button class="quiz-btn-back" onclick="qBack(9)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qNext(9)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(9)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ KORAK 10: Voda ═══ -->
+    <!-- ═══ KORAK 10: Voda / Water ═══ -->
     <div class="quiz-step" id="qstep-10">
       <div class="quiz-emoji">💧</div>
-      <div class="quiz-q">Koliko vode spiješ na dan?</div>
-      <div class="quiz-hint">Hidracija je ključna za metabolizem in energijo.</div>
+      <div class="quiz-q"><span class="sl-only">Koliko vode spiješ na dan?</span><span class="en-only">How much water do you drink per day?</span></div>
+      <div class="quiz-hint"><span class="sl-only">Hidracija je ključna za metabolizem in energijo.</span><span class="en-only">Hydration is key for metabolism and energy.</span></div>
       <div class="quiz-cards">
         <div class="quiz-card" onclick="qSelectCard(this,'water','under1')">
           <span class="quiz-card-icon">🏜️</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">Manj kot 1 L</div><div class="quiz-card-desc">Premalo hidratacije</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title"><span class="sl-only">Manj kot 1 L</span><span class="en-only">Less than 1 L</span></div><div class="quiz-card-desc"><span class="sl-only">Premalo hidratacije</span><span class="en-only">Insufficient hydration</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'water','1to2')">
           <span class="quiz-card-icon">💧</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">1–2 L</div><div class="quiz-card-desc">Spodnja meja priporočenega</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title">1–2 L</div><div class="quiz-card-desc"><span class="sl-only">Spodnja meja priporočenega</span><span class="en-only">Lower end of recommended</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'water','2to3')">
           <span class="quiz-card-icon">💦</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">2–3 L</div><div class="quiz-card-desc">Dobra hidracija</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title">2–3 L</div><div class="quiz-card-desc"><span class="sl-only">Dobra hidracija</span><span class="en-only">Good hydration</span></div></div>
         </div>
         <div class="quiz-card" onclick="qSelectCard(this,'water','over3')">
           <span class="quiz-card-icon">🌊</span>
-          <div class="quiz-card-text"><div class="quiz-card-title">3+ L</div><div class="quiz-card-desc">Odlična hidracija</div></div>
+          <div class="quiz-card-text"><div class="quiz-card-title">3+ L</div><div class="quiz-card-desc"><span class="sl-only">Odlična hidracija</span><span class="en-only">Excellent hydration</span></div></div>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qNext(10)">Naprej →</button>
-      <button class="quiz-btn-back" onclick="qBack(10)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qNext(10)"><span class="sl-only">Naprej →</span><span class="en-only">Next →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(10)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ KORAK 11: Poškodbe ═══ -->
+    <!-- ═══ KORAK 11: Poškodbe / Injuries ═══ -->
     <div class="quiz-step" id="qstep-11">
       <div class="quiz-emoji">🏥</div>
-      <div class="quiz-q">Poškodbe in zdravstvene omejitve</div>
-      <div class="quiz-hint">Izberi vse kar velja zate — prilagodimo vadbo in priporočila.</div>
+      <div class="quiz-q"><span class="sl-only">Poškodbe in zdravstvene omejitve</span><span class="en-only">Injuries and health conditions</span></div>
+      <div class="quiz-hint"><span class="sl-only">Izberi vse kar velja zate — prilagodimo vadbo in priporočila.</span><span class="en-only">Select all that apply — we'll adjust workouts and recommendations.</span></div>
       <div class="quiz-checks" id="q-injuries">
         <div class="quiz-check selected" onclick="qToggleInjury(this,'brez poškodb')">
-          <div class="quiz-check-box">✓</div><span class="quiz-check-label">✅ Brez poškodb</span>
+          <div class="quiz-check-box">✓</div><span class="quiz-check-label"><span class="sl-only">✅ Brez poškodb</span><span class="en-only">✅ No injuries</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'koleno')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🦵 Koleno</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🦵 Koleno</span><span class="en-only">🦵 Knee</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'hrbet')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🔙 Hrbet / hrbtenica</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🔙 Hrbet / hrbtenica</span><span class="en-only">🔙 Back / spine</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'rama')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">💪 Rama</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">💪 Rama</span><span class="en-only">💪 Shoulder</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'gleženj')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🦶 Gleženj</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🦶 Gleženj</span><span class="en-only">🦶 Ankle</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'stopalo')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🦶 Stopalo</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🦶 Stopalo</span><span class="en-only">🦶 Foot</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'kolk')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🦴 Kolk</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🦴 Kolk</span><span class="en-only">🦴 Hip</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'komolec')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🎾 Komolec</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🎾 Komolec</span><span class="en-only">🎾 Elbow</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'vrat')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🧠 Vrat / tilnik</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🧠 Vrat / tilnik</span><span class="en-only">🧠 Neck / nape</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'zapestje')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">✋ Zapestje</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">✋ Zapestje</span><span class="en-only">✋ Wrist</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'golen')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🦿 Golen</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🦿 Golen</span><span class="en-only">🦿 Shin</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'misica')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">💪 Nateg mišice</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">💪 Nateg mišice</span><span class="en-only">💪 Muscle strain</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'prepona')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">⚽ Prepona &amp; dimlje</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">⚽ Prepona &amp; dimlje</span><span class="en-only">⚽ Groin &amp; hip flexors</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'trebuh')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">💪 Trebušne mišice</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">💪 Trebušne mišice</span><span class="en-only">💪 Abdominal muscles</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'srce')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">❤️ Srčne težave</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">❤️ Srčne težave</span><span class="en-only">❤️ Heart conditions</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'dihala')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🫁 Dihalne težave</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🫁 Dihalne težave</span><span class="en-only">🫁 Breathing difficulties</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'sladkorna')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">💉 Sladkorna bolezen</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">💉 Sladkorna bolezen</span><span class="en-only">💉 Diabetes</span></span>
         </div>
         <div class="quiz-check" onclick="qToggleInjury(this,'mozgani')">
-          <div class="quiz-check-box"></div><span class="quiz-check-label">🧠 Pretres možganov</span>
+          <div class="quiz-check-box"></div><span class="quiz-check-label"><span class="sl-only">🧠 Pretres možganov</span><span class="en-only">🧠 Concussion</span></span>
         </div>
       </div>
-      <button class="quiz-btn" onclick="qShowResults()">Prikaži moj plan →</button>
-      <button class="quiz-btn-back" onclick="qBack(11)">← Nazaj</button>
+      <button class="quiz-btn" onclick="qShowResults()"><span class="sl-only">Prikaži moj plan →</span><span class="en-only">Show my plan →</span></button>
+      <button class="quiz-btn-back" onclick="qBack(11)"><span class="sl-only">← Nazaj</span><span class="en-only">← Back</span></button>
     </div>
 
-    <!-- ═══ REZULTATI ═══ -->
+    <!-- ═══ REZULTATI / RESULTS ═══ -->
     <div class="quiz-step" id="qstep-results">
       <div class="quiz-result-header">
         <div class="quiz-emoji">✨</div>
@@ -3035,20 +3056,20 @@
       <div class="quiz-result-card">
         <div class="quiz-result-cal">
           <div class="quiz-result-cal-num" id="q-res-kcal">—</div>
-          <div class="quiz-result-cal-label">kcal na dan</div>
+          <div class="quiz-result-cal-label" id="q-res-kcal-label"><span class="sl-only">kcal na dan</span><span class="en-only">kcal per day</span></div>
         </div>
         <div class="quiz-result-stats">
           <div class="quiz-stat"><div class="quiz-stat-val" id="q-res-bmi">—</div><div class="quiz-stat-lbl">BMI</div></div>
-          <div class="quiz-stat"><div class="quiz-stat-val" id="q-res-tdee">—</div><div class="quiz-stat-lbl">Vzdrž. kcal</div></div>
-          <div class="quiz-stat"><div class="quiz-stat-val" id="q-res-goal-badge">—</div><div class="quiz-stat-lbl">Cilj</div></div>
+          <div class="quiz-stat"><div class="quiz-stat-val" id="q-res-tdee">—</div><div class="quiz-stat-lbl" id="q-res-tdee-lbl"><span class="sl-only">Vzdrž. kcal</span><span class="en-only">Maint. kcal</span></div></div>
+          <div class="quiz-stat"><div class="quiz-stat-val" id="q-res-goal-badge">—</div><div class="quiz-stat-lbl" id="q-res-goal-lbl"><span class="sl-only">Cilj</span><span class="en-only">Goal</span></div></div>
         </div>
       </div>
       <div class="quiz-result-goal" id="q-res-goal-card">
         <div class="quiz-result-goal-text" id="q-res-goal-desc">—</div>
       </div>
       <div id="q-res-warnings" style="margin-bottom:0.9rem;"></div>
-      <button class="quiz-btn" onclick="qProceedToPayment()">Začni z Vitali — €4.99/mesec →</button>
-      <div class="quiz-result-note">Odkleni celoten personaliziran plan z naročnino</div>
+      <button class="quiz-btn" onclick="qProceedToPayment()" id="q-res-cta-btn"><span class="sl-only">Začni z Vitali — €4.99/mesec →</span><span class="en-only">Start with Vitali — €4.99/month →</span></button>
+      <div class="quiz-result-note" id="q-res-note"><span class="sl-only">Odkleni celoten personaliziran plan z naročnino</span><span class="en-only">Unlock your full personalized plan with a subscription</span></div>
     </div>
 
   </div>
@@ -17344,6 +17365,7 @@
   }
 
   // ── QUIZ FUNNEL ──────────────────────────────────────────────────
+  var _qLang = localStorage.getItem("zz_lang") || "sl";
   var _qData = {
     name:'', gender:'', age:0, height:0, weight:0, goalWeight:0,
     goal:'', activity:null, experience:'',
@@ -17352,9 +17374,26 @@
   };
   var _qTotalSteps = 11;
 
+  function showLangGate() {
+    var lg = document.getElementById("lang-gate");
+    if (lg) lg.classList.remove("hidden");
+  }
+
   function showQuizGate() {
+    var lg = document.getElementById("lang-gate");
+    if (lg) lg.classList.add("hidden");
     var q = document.getElementById("quiz-gate");
     if (q) q.classList.remove("hidden");
+    qSetStep(1);
+  }
+
+  function qSelectLang(lang) {
+    _qLang = lang;
+    localStorage.setItem("zz_lang", lang);
+    document.body.classList.toggle("lang-en", lang === "en");
+    var nameInput = document.getElementById("q-name");
+    if (nameInput) nameInput.placeholder = lang === "en" ? "e.g. Ana" : "npr. Ana";
+    showQuizGate();
   }
 
   function qSelectCard(el, field, val) {
@@ -17404,19 +17443,21 @@
     if (stepEl) stepEl.classList.add("active");
     var pb = document.getElementById("quiz-prog");
     if (pb) pb.style.width = pct + "%";
-    var lbl = document.getElementById("quiz-step-label");
+    var isEN = (_qLang === "en");
+    var lbl  = document.getElementById("quiz-step-label");
     var pctEl = document.getElementById("quiz-step-pct");
-    if (lbl) lbl.textContent = isResults ? "Tvoj plan" : "Korak " + n + " / " + _qTotalSteps;
+    if (lbl) lbl.textContent = isResults ? (isEN ? "Your plan" : "Tvoj plan") : (isEN ? "Step " : "Korak ") + n + " / " + _qTotalSteps;
     if (pctEl) pctEl.textContent = pct + "%";
     var gate = document.getElementById("quiz-gate");
     if (gate) gate.scrollTop = 0;
   }
 
   function qNext(step) {
+    var isEN = (_qLang === "en");
     if (step === 1) {
       var name = (document.getElementById("q-name").value || "").trim();
       if (!name) { document.getElementById("q-name").focus(); return; }
-      if (!_qData.gender) { alert("Prosimo izberi spol."); return; }
+      if (!_qData.gender) { alert(isEN ? "Please select your gender." : "Prosimo izberi spol."); return; }
       _qData.name = name; qSetStep(2);
     } else if (step === 2) {
       var age = parseInt(document.getElementById("q-age").value, 10);
@@ -17429,26 +17470,26 @@
       _qData.age = age; _qData.height = h; _qData.weight = w; _qData.goalWeight = gw;
       qSetStep(3);
     } else if (step === 3) {
-      if (!_qData.goal) { alert("Prosimo izberi cilj."); return; }
+      if (!_qData.goal) { alert(isEN ? "Please select your goal." : "Prosimo izberi cilj."); return; }
       qSetStep(4);
     } else if (step === 4) {
-      if (!_qData.activity) { alert("Prosimo izberi raven aktivnosti."); return; }
+      if (!_qData.activity) { alert(isEN ? "Please select your activity level." : "Prosimo izberi raven aktivnosti."); return; }
       qSetStep(5);
     } else if (step === 5) {
-      if (!_qData.experience) { alert("Prosimo izberi raven izkušenj."); return; }
+      if (!_qData.experience) { alert(isEN ? "Please select your experience level." : "Prosimo izberi raven izkušenj."); return; }
       qSetStep(6);
     } else if (step === 6) {
       qSetStep(7);
     } else if (step === 7) {
       qSetStep(8);
     } else if (step === 8) {
-      if (!_qData.sleep) { alert("Prosimo izberi spalne navade."); return; }
+      if (!_qData.sleep) { alert(isEN ? "Please select your sleep habits." : "Prosimo izberi spalne navade."); return; }
       qSetStep(9);
     } else if (step === 9) {
-      if (!_qData.stress) { alert("Prosimo izberi raven stresa."); return; }
+      if (!_qData.stress) { alert(isEN ? "Please select your stress level." : "Prosimo izberi raven stresa."); return; }
       qSetStep(10);
     } else if (step === 10) {
-      if (!_qData.water) { alert("Prosimo izberi vnos vode."); return; }
+      if (!_qData.water) { alert(isEN ? "Please select your water intake." : "Prosimo izberi vnos vode."); return; }
       qSetStep(11);
     }
   }
@@ -17467,34 +17508,42 @@
   }
 
   function qShowResults() {
+    var isEN = (_qLang === "en");
     var cal  = qCalcCalories();
     var bmiH = _qData.height / 100;
     var bmiN = _qData.weight / (bmiH * bmiH);
     var bmi  = bmiN.toFixed(1);
-    var bmiCat = bmiN < 18.5 ? "Podhranjenost" : bmiN < 25 ? "Normalna" : bmiN < 30 ? "Prekomerna" : "Debelost";
 
-    var goalLabels = { lose:"🔥 Hujšanje", maintain:"⚖️ Vzdrž.", gain:"💪 Mišice", fitness:"🏃 Kondicija" };
-    var goalDescs  = {
-      lose:    "S " + cal.target + " kcal/dan boš izgubil(a) cca. 0,5 kg tedensko. Vzdrževalni vnos: " + cal.tdee + " kcal.",
-      maintain:"S " + cal.target + " kcal/dan boš ohranil(a) svojo trenutno težo.",
-      gain:    "S " + cal.target + " kcal/dan boš postopno pridobival(a) mišično maso. Vzdrževalni vnos: " + cal.tdee + " kcal.",
-      fitness: "S " + cal.target + " kcal/dan in redno vadbo boš opazil(a) izboljšanje kondicije."
-    };
+    var goalLabels = isEN
+      ? { lose:"🔥 Loss", maintain:"⚖️ Maintain", gain:"💪 Muscle", fitness:"🏃 Fitness" }
+      : { lose:"🔥 Hujšanje", maintain:"⚖️ Vzdrž.", gain:"💪 Mišice", fitness:"🏃 Kondicija" };
+    var goalDescs = isEN
+      ? {
+          lose:    "At " + cal.target + " kcal/day you'll lose approx. 0.5 kg per week. Maintenance: " + cal.tdee + " kcal.",
+          maintain:"At " + cal.target + " kcal/day you'll maintain your current weight.",
+          gain:    "At " + cal.target + " kcal/day you'll gradually build muscle mass. Maintenance: " + cal.tdee + " kcal.",
+          fitness: "At " + cal.target + " kcal/day with regular training you'll notice fitness improvements."
+        }
+      : {
+          lose:    "S " + cal.target + " kcal/dan boš izgubil(a) cca. 0,5 kg tedensko. Vzdrževalni vnos: " + cal.tdee + " kcal.",
+          maintain:"S " + cal.target + " kcal/dan boš ohranil(a) svojo trenutno težo.",
+          gain:    "S " + cal.target + " kcal/dan boš postopno pridobival(a) mišično maso. Vzdrževalni vnos: " + cal.tdee + " kcal.",
+          fitness: "S " + cal.target + " kcal/dan in redno vadbo boš opazil(a) izboljšanje kondicije."
+        };
 
-    // Build warnings based on profile
     var warnings = [];
-    if (_qData.sleep === 'under6') warnings.push("😴 Premalo spanja znižuje metabolizem — cilj je 7–8 ur.");
-    if (_qData.stress === 'very' || _qData.stress === 'high') warnings.push("🧘 Visok stres povečuje kortizol — priporočamo meditacijo in okrevanje.");
-    if (_qData.water === 'under1') warnings.push("💧 Premalo vode — priporočamo vsaj 2 L na dan za boljši metabolizem.");
+    if (_qData.sleep === 'under6') warnings.push(isEN ? "😴 Too little sleep reduces metabolism — aim for 7–8 hours." : "😴 Premalo spanja znižuje metabolizem — cilj je 7–8 ur.");
+    if (_qData.stress === 'very' || _qData.stress === 'high') warnings.push(isEN ? "🧘 High stress raises cortisol — we recommend meditation and recovery." : "🧘 Visok stres povečuje kortizol — priporočamo meditacijo in okrevanje.");
+    if (_qData.water === 'under1') warnings.push(isEN ? "💧 Too little water — aim for at least 2 L per day for better metabolism." : "💧 Premalo vode — priporočamo vsaj 2 L na dan za boljši metabolizem.");
     if (_qData.injuries.length > 0 && _qData.injuries[0] !== 'brez poškodb') {
-      warnings.push("🏥 Upoštevali smo tvoje poškodbe — Vitali ima sekcijo za rehabilitacijo.");
+      warnings.push(isEN ? "🏥 We've noted your injuries — Vitali has a rehabilitation section for you." : "🏥 Upoštevali smo tvoje poškodbe — Vitali ima sekcijo za rehabilitacijo.");
     }
     if (_qData.goalWeight && _qData.goalWeight < _qData.weight * 0.6) {
-      warnings.push("⚠️ Ciljeva teža je zelo nizka — priporočamo postopen pristop.");
+      warnings.push(isEN ? "⚠️ Your goal weight is very low — we recommend a gradual approach." : "⚠️ Ciljeva teža je zelo nizka — priporočamo postopen pristop.");
     }
 
-    document.getElementById("q-res-name").textContent  = "Pozdravljen(a), " + _qData.name + "! 👋";
-    document.getElementById("q-res-sub").textContent   = "Tvoj 100% personaliziran zdravstveni plan.";
+    document.getElementById("q-res-name").textContent  = (isEN ? "Hello, " : "Pozdravljen(a), ") + _qData.name + "! 👋";
+    document.getElementById("q-res-sub").textContent   = isEN ? "Your 100% personalized health plan." : "Tvoj 100% personaliziran zdravstveni plan.";
     document.getElementById("q-res-kcal").textContent  = cal.target;
     document.getElementById("q-res-bmi").textContent   = bmi;
     document.getElementById("q-res-tdee").textContent  = cal.tdee;
@@ -17504,7 +17553,7 @@
     var warnEl = document.getElementById("q-res-warnings");
     if (warnEl) {
       warnEl.innerHTML = warnings.map(function(w){
-        return '<div style="background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.3);border-radius:8px;padding:0.65rem 0.85rem;margin-bottom:0.5rem;font-size:0.82rem;color:var(--text-primary);">' + w + '</div>';
+        return '<div style="background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.3);border-radius:8px;padding:0.65rem 0.85rem;margin-bottom:0.5rem;font-size:0.82rem;color:rgba(255,255,255,0.88);">' + w + '</div>';
       }).join("");
     }
 
@@ -17661,12 +17710,22 @@
       var savedTs    = parseInt(localStorage.getItem("zz_license_ts") || "0", 10);
       var sevenDays  = 7 * 24 * 60 * 60 * 1000;
       if (!savedEmail || (Date.now() - savedTs) > sevenDays) {
-        // Show quiz for new users, license gate for returning (quiz already done)
         var quizDone = localStorage.getItem("zz_quiz_done");
         if (quizDone) {
+          // Quiz already done — go straight to license gate
           showLicenseGate();
         } else {
-          showQuizGate();
+          // New user — check if language already chosen
+          var langChosen = localStorage.getItem("zz_lang");
+          if (langChosen) {
+            // Language already selected — go straight to quiz
+            _qLang = langChosen;
+            document.body.classList.toggle("lang-en", langChosen === "en");
+            showQuizGate();
+          } else {
+            // First time — show language selection
+            showLangGate();
+          }
         }
         return;
       }

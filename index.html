@@ -17008,8 +17008,7 @@
   (function() {
     loadState();
     // Check subscription
-    // Set _LIC_BYPASS = false when Cloudflare Worker is deployed
-    var _LIC_BYPASS = true;
+    var _LIC_BYPASS = false;
     if (!_LIC_BYPASS) {
       var savedEmail = localStorage.getItem("zz_license");
       var savedTs    = parseInt(localStorage.getItem("zz_license_ts") || "0", 10);

@@ -5769,6 +5769,7 @@
   // ─── PERSISTENCE ───
   function saveState() {
     localStorage.setItem("zz_state_v2", JSON.stringify(state));
+    _saveToCloud();
   }
 
   function loadState() {
@@ -17830,6 +17831,53 @@
   // Replace WORKER_URL with your Cloudflare Worker URL after deploy
   var _WORKER_URL = "https://vitali-auth.david-730.workers.dev";
   var _STRIPE_LINK = "https://buy.stripe.com/9B67sKa7NeaJ7CM2acdby00";
+  var _activeEmail = localStorage.getItem("zz_license") || null;
+  var _syncTimer   = null;
+
+  // ── Cloud sync: save (debounced 4s after last change) ────────────
+  function _saveToCloud() {
+    if (!_activeEmail) return;
+    clearTimeout(_syncTimer);
+    _syncTimer = setTimeout(function() {
+      var raw = localStorage.getItem("zz_state_v2");
+      if (!raw) return;
+      fetch(_WORKER_URL + "/save", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ email: _activeEmail, data: raw })
+      }).catch(function() {}); // fail silently — local data is always the source of truth
+    }, 4000);
+  }
+
+  // ── Cloud sync: load on login ────────────────────────────────────
+  function _loadFromCloud(email) {
+    fetch(_WORKER_URL + "/load", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ email: email })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      if (!res.ok || !res.data) return; // No cloud data yet
+
+      var localRaw = localStorage.getItem("zz_state_v2");
+      if (localRaw) {
+        // Both exist — pick the one with more data (higher JSON length = more entries)
+        // This protects users who start fresh on a new device
+        if (res.data.length > localRaw.length) {
+          localStorage.setItem("zz_state_v2", res.data);
+          if (typeof loadState === "function") loadState();
+          showToast("☁️ Data restored from cloud");
+        }
+      } else {
+        // No local data — restore from cloud
+        localStorage.setItem("zz_state_v2", res.data);
+        if (typeof loadState === "function") loadState();
+        showToast("☁️ Data restored from cloud");
+      }
+    })
+    .catch(function() {}); // fail silently
+  }
 
   function showLicenseGate() {
     var gate = document.getElementById("license-gate");
@@ -17866,10 +17914,12 @@
       if (data.active) {
         localStorage.setItem("zz_license", email);
         localStorage.setItem("zz_license_ts", Date.now().toString());
+        _activeEmail = email;
         _applyQuizDataToProfile();
         var gate = document.getElementById("license-gate");
         if (gate) gate.classList.add("hidden");
         _licStartup();
+        _loadFromCloud(email); // Restore data if user is on new device
       } else {
         if (inp) { inp.classList.add("error"); inp.disabled = false; }
         if (btnTxt) btnTxt.textContent = "Continue →";
